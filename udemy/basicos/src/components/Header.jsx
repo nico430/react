@@ -1,7 +1,7 @@
 import React from 'react'
 
-function Header(){
-
+function Header({titulo}){
+  
   const edad = 18;
 
   let mensaje;
@@ -12,9 +12,11 @@ function Header(){
     mensaje = "sos menor de edad"
   }
   return(
-    <h1 id="encabezado" className="encabezado">Tienda Virtual<h1/>
-    <h1> Desde el header edad: {edad}{mensaje} </h1></h1>
+    <h1 id="encabezado" className="encabezado">{titulo}<h1/>
+    <h1> Desde el header edad: {edad} {mensaje} </h1></h1>
   )
 }
+
+
 
 export default Header;
