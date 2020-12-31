@@ -1,26 +1,83 @@
 import React, {Fragment, useState} from 'react';
+import uuid from 'uuid/v4';
 
 const Formulario = () => {
 
     //Crear state para citas
-    [citas, agregarCita] = useState({
+   const [cita, agregarCita] = useState({
         mascota:'',
         propietario:'',
         fecha:'',
         hora:'',
-        sitnomas:''
+        sintomas:''
     })
 
+    // creando segundo state para los errores (si se puede poner mas de un state)
+
+    const [error, actualizarError] = useState(false) 
+    // aca se lo declara como booleano pero yo le pondria un json para declara cada error por separado y no un error global, mas que nada para mas detalles etc.
+
+
     //Función manejadora de cambios en el input
-    const handleChange = () =>{
-        console.log('escribiendo...')
+    const handleChange = (e) =>{ // e es el evento y se lo puede pasar sin los parentesis
+        
+        agregarCita({
+
+            ...cita,  
+            //se usa una copia del state con este operador para no sobreescribir el state definido al inicio
+
+            [e.target.name] : e.target.value 
+            //se hace array destructuring para asignar cada valor a su llave correspondiente
+
+       })    
     }
+    
+        //estos valores se los pasa como values en los input para despues recetearlo
+        // destructuring de cita:
+        const {mascota,propietario,fecha,hora,sintomas} = cita;
+
+
+            //submit del formulario
+        const enviar = (e) => {
+            e.preventDefault();
+
+            //validar
+            if( mascota.trim() === '' ||        //por si sos un yo del futuro y te olvidaste: || es un or 
+             propietario.trim() === '' ||       // trim es un método que elimina los espacios en blanco
+             fecha.trim() === '' ||
+             hora.trim() === '' || 
+             sintomas.trim() === '' ){ 
+                
+            actualizarError(true);
+                
+            return; 
+            // el return es para que una vez detectado el error el codigo pegue un salto y deje de ejecutarse
+
+            //si mascota quitando espacios accidentales es igual a un string vacio es que hay un error
+            
+            }
+            //eliminar el mensaje de error previo(si existiera)
+            actualizarError(false);
+            //luego asignar un id
+            cita.id = uuid();
+            //crear la cita
+
+            //reiniciar el form
+
+        }
 
     return ( 
         <Fragment>
             <h2>Crear cita</h2>
 
-            <form>
+            
+            {error ?  <p className="alerta-error">Todos los campos son obligatorios</p>  : null 
+            //en el return no se puede usar el if entonces se usan ternarios
+            }
+
+            <form
+                onSubmit={enviar}
+            >
                 <label>Nombre Mascota</label>
                 <input 
                     type="text"
@@ -28,6 +85,7 @@ const Formulario = () => {
                     className="u-full-width"
                     placeholder="Nombre Mascota"
                     onChange={handleChange}
+                    value={mascota}
                 />
 
                 <label>Nombre Del Dueño</label>
@@ -36,6 +94,8 @@ const Formulario = () => {
                     name="propietario"
                     className="u-full-width"
                     placeholder="Nombre Dueño de la mascota"
+                    onChange={handleChange}
+                    value={propietario}
                 />
                 
                 <label>Fecha</label>
@@ -43,6 +103,8 @@ const Formulario = () => {
                     type="date"
                     name="fecha"
                     className="u-full-width"
+                    onChange={handleChange}
+                    value={fecha}
                 />
                 
                 <label>hora</label>
@@ -50,12 +112,16 @@ const Formulario = () => {
                     type="time"
                     name="hora"
                     className="u-full-width"
+                    onChange={handleChange}
+                    value={hora}
                 />
                 
                 <label>Síntomas</label>
                 <textarea
                     className="u-full-width"
                     name="sintomas"
+                    onChange={handleChange}
+                    value={sintomas}
                 ></textarea>
 
                 <button
