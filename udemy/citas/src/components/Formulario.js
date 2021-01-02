@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
-import uuid from 'uuid/v4';
+import uuid from 'C:/Users/nicoc/Desktop/web-development/react/udemy/citas/node_modules/uuid/dist/v4.js';
 
-const Formulario = () => {
+const Formulario = ({crearCita}) => {
 
     //Crear state para citas
    const [cita, agregarCita] = useState({
@@ -61,8 +61,17 @@ const Formulario = () => {
             //luego asignar un id
             cita.id = uuid();
             //crear la cita
-
+            crearCita(cita); //le pasamos la cita con el id ya puesto, osea el formulario actual
             //reiniciar el form
+            agregarCita(//es la misma funcion que se usaba para extraer los datos
+                {//solo que ahora en ves de traer los datos aca se los volvemos a asignar a los values del form como strings vacios
+                    mascota:'',
+                    propietario:'',
+                    fecha:'',
+                    hora:'',
+                    sintomas:''
+                }
+            )
 
         }
 
