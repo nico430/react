@@ -29,7 +29,7 @@ const Formulario = ({crearCita}) => {
             [e.target.name] : e.target.value 
             //se hace array destructuring para asignar cada valor a su llave correspondiente
 
-       })    
+        })    
     }
     
         //estos valores se los pasa como values en los input para despues recetearlo
@@ -56,6 +56,7 @@ const Formulario = ({crearCita}) => {
             //si mascota quitando espacios accidentales es igual a un string vacio es que hay un error
             
             }
+
             //eliminar el mensaje de error previo(si existiera)
             actualizarError(false);
             //luego asignar un id
@@ -72,6 +73,8 @@ const Formulario = ({crearCita}) => {
                     sintomas:''
                 }
             )
+                var date = new Date()
+            console.log(date)
 
         }
 
@@ -80,7 +83,8 @@ const Formulario = ({crearCita}) => {
             <h2>Crear cita</h2>
 
             
-            {error ?  <p className="alerta-error">Todos los campos son obligatorios</p>  : null 
+            {error ?  <p className="alerta-error">Todos los campos son obligatorios</p>  
+            : null 
             //en el return no se puede usar el if entonces se usan ternarios
             }
 
@@ -116,7 +120,7 @@ const Formulario = ({crearCita}) => {
                     value={fecha}
                 />
                 
-                <label>hora</label>
+                <label>Hora</label>
                 <input 
                     type="time"
                     name="hora"
