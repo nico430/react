@@ -73,8 +73,6 @@ const Formulario = ({crearCita}) => {
                     sintomas:''
                 }
             )
-                var date = new Date()
-            console.log(date)
 
         }
 
